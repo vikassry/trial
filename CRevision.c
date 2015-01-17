@@ -1,4 +1,4 @@
-#include "pointerPractise.h"
+#include "CRevision.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,12 +44,11 @@ int filter(int *array, int length, int threshold, int **result_array){
 			j++;
 		}
 	}
-	return len;
+	return (length<=0) ? 0 : len;
 }
 
 int reverse(int *array, int length){
-	int i,temp;
-	int last = length-1;
+	int i, temp, last = length-1;
 
 	for(i=0; i<length/2; i++){
 		temp = array[i];
@@ -77,6 +76,7 @@ int slice(int *array, int len_of_array, int start_index, int end_index, int **re
 		result_len++;
 	}
 	*result = (int *)malloc(sizeof(int)*result_len);
+	
 	for(i=start_index; i<end_index; i++){
 		(*result)[j] = array[i];
 		j++;
@@ -108,7 +108,6 @@ int primeNumbers(int start, int end, int **array){
 	return prime;
 }
 
-
 int strCompare(char *arr1, char *arr2){
 	int result=0,i;
 	int len1 = strlen(arr1), len2 = strlen(arr2);
@@ -132,6 +131,7 @@ int makesqr(int x){
 int Increment(int a){
 	return a+1;
 }
+
 int int_forEach(int *array, int length, int (*fun)(int x)){
 	int i;
 	for(i=0; i<length; i++){
@@ -165,6 +165,13 @@ char give_firstChar(string name){
 	return name[0];
 }
 
+int float_forEach(float *array, int length, float(*fun)(float x)){
+	int i;
+	for(i=0; i<length; i++){
+		array[i] = (*fun)(array[i]);
+	}
+	return (length<=0) ? 0 : 1;
+}
 // int stringForEach(string *array, int length, char(*first)(string ch)){
 // 	int i;
 // 	for(i=0; i<length; i++){
@@ -206,12 +213,39 @@ int char_filter(char *array, int length, int(*fun)(char ch), char **filtered_arr
 	return (length<=0) ? 0 : len;
 }
 
-int isLargeString(string name){return 0;};
-
-int string_filter(char **a, int length, int(*func)(char *ch), char ***ch){
-	return 0;
+int isLargeString(string name){
+	return (str_len(name)>3);
 };
 
+int string_filter(string *array, int length, int(*func)(string ch), string **result){
+	int i, len=0;
+	string *filtered = (string *)0;
+	for(i=0; i<length; i++){
+		if(func(array[i])){
+			filtered = (string*)realloc(filtered, sizeof(string)*(i+1));
+			filtered[len] = array[i]; len++;
+		}
+	}
+	*result = filtered;
+	return (length<=0) ? 0 : len;
+};
+
+int isSmallFloat(float num){
+	return num < 10;
+}
+int float_filter(float *numbers, int length, int(predicate)(float n), float **result){
+	int i=0, len=0;
+	float *filtered = (float *)0;
+	for(i=0; i<length; ++i){
+		if(predicate(numbers[i])){
+			filtered = (float *)realloc(filtered, sizeof(float)*(i+1));
+			filtered[len] = numbers[i]; 
+			len++;
+		}
+	}
+	*result = filtered;
+	return (length<=0) ? 0 : len;
+}
 
 
 int makeDouble(int num){
@@ -246,6 +280,18 @@ int *stringMap(string *names, int length, int(*getLength)(string name)){
 		result[i] = getLength(names[i]);
 	}  
 	return result;
+}
+
+float increment(float value){
+	return value + 1;
+}
+float *floatMap(float *numbers, int lenght, float(*inc)(float num)){
+	int i;
+	float *new_numbers = (float *)malloc(sizeof(float)*lenght);
+	for(i=0; i<lenght; ++i){
+		new_numbers[i] = inc(numbers[i]);
+	}
+	return new_numbers;
 }
 
 int indexOf(string text, string substr){

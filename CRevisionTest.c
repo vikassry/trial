@@ -1,5 +1,5 @@
 #include "expr_assert.h"
-#include "pointerPractise.h"
+#include "CRevision.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -49,7 +49,6 @@ void test_fibonacci_works_for_decimal(){
 	free(array);
 }
 
-
 void test_concat_concats_two_arrays_with_length_also(){
 	int arr1[]={1,2,3};
 	int arr2[]={3,4,5,6,8};
@@ -86,7 +85,7 @@ void test_filter_filters_the_array(){
 	assert(filtered_array[1]==90);
 	free(filtered_array);
 }
-void test_filter_filters_the_array_(){
+void test_filters_the_array_(){
 	int scores[5]={100,30,45,80,46};
 	int *filtered_array;
 	assertEqual(filter(scores,5,45,&filtered_array), 4);
@@ -97,13 +96,10 @@ void test_filter_filters_the_array_(){
 	free(filtered_array);
 }
 
-
 void test_reverse_the_array_itself(){
 	int array[4];
-	array[0] = 1;
-	array[1] = 2;
-	array[2] = 3;
-	array[3] = 4;
+	array[0] = 1; array[1] = 2;
+	array[2] = 3; array[3] = 4;
 	assert(reverse(array,4)==1);
 	assert(array[0]==4);
 	assert(array[1]==3);
@@ -226,17 +222,31 @@ void test_when_makesqr_is_passed_to_for_each_gives_square_of_array_elements(){
 	assert(array[0]==1);
 	assert(array[1]==8);
 }
+void test_forEach_gives_0_for_empty_array_otherwise_1(){
+	int array[0];
+	int array2[1];
+	int (*fun)(int) = &makesqr;
+	assertEqual(int_forEach(array, 0, fun),0);
+	assertEqual(int_forEach(array2, 1, fun),1);
+}
 
 void test_upper_case_gives_UPPERCASE_of_given_char(){
 	assert(upper_case('z')=='Z');
 }
-void test__forEach_converts_to_upper_case_(){
+void test_char_forEach_converts_to_upper_case_(){
 	char array[] = {'a','b','c','\0'};
 	char (*upper)(char) = upper_case;
 	assertEqual(char_forEach(array,3,upper),1);
 	assertEqual(array[0],'A');
 	assertEqual(array[1],'B');
 	assertEqual(array[2],'C');
+}
+
+void test_float_forEach_increments_each_element(){
+	float numbers[] = {3.5, 6.75, 2.25, 10.00};
+	float(*inc)(float) = &increment;
+	assertEqual(float_forEach(numbers, 4, inc),1);
+	assert(numbers[0]==4.5);
 }
 // void test_string__forEach_converts_string_array_to_lower_case(){
 // 	string names[] = {"VIKAS","JEEVAN","SURYAVANSHI",'\0'};
@@ -247,11 +257,24 @@ void test__forEach_converts_to_upper_case_(){
 // 	assert(names[2]=='S');
 // }
 
+void test_Filter_gives_0_for_empty_array_or_negative_length(){
+	int numbers[0];
+	int *filtered_terms;
+	assertEqual(int_filter(numbers,-1,giveMultipleof5,&filtered_terms),0);
+}
+void test_Filter_doesnt_change_original_array(){
+	int numbers[] = {4,5,90,35,43,67};
+	int *filtered_terms;
+	assertEqual(int_filter(numbers,6,giveMultipleof5,&filtered_terms),3);
+	assertEqual(filtered_terms[0],5);
+	assert(numbers[0]==4)	;
+	free(filtered_terms);
+}
 void test_giveMultiplesof5_gives_1_for_multiples_of_5(){
 	assertEqual(giveMultipleof5(25),1);
 	assertEqual(giveMultipleof5(24),0);
 }
-void test_Filter_gives_multiples_of_5(){
+void test_int_Filter_gives_multiples_of_5(){
 	int numbers[] = {4,5,90,35,43,67};
 	int *filtered_terms;
 	assertEqual(int_filter(numbers,6,giveMultipleof5,&filtered_terms),3);
@@ -272,7 +295,7 @@ void test_isCapital_gives_1_for_capital_letter(){
 	assert(isCapital('Z')==1);
 	assert(isCapital('s')==0);
 }
-void test_Filter_gives_filters_the_capital_letters(){
+void test_charFilter_gives_filters_the_capital_letters(){
 	char word[] = {'a','B','c','D','F','h','u','j','H','y','\0'};
 	char *capitals;
 	assertEqual(char_filter(word,10,isCapital,&capitals),4);
@@ -283,12 +306,33 @@ void test_Filter_gives_filters_the_capital_letters(){
 	assert(word[0]=='a');
 }
 
-void test_Filter_returns_string_that_greater_than_3(){
+void test_isLargeString_gives_1_for_vikas(){
+	assertEqual(isLargeString("vikas"),1);
+	assertEqual(isLargeString("vik"),0);
+}
+
+void test_stringFilter_returns_string_that_greater_than_3(){
 	string words[] = {"hii","vikas","suryavanshi","foo","five"};
 	int(*function)(string) = &isLargeString;
 	string *filtered;
-	string_filter(words,5,function,&filtered);
-	// assertEqual(, EXPR2)
+	int Filtered_number = string_filter(words,5,function,&filtered);
+	assertEqual(Filtered_number, 3);
+	assert(filtered[0]=="vikas");
+	assert(filtered[1]=="suryavanshi");
+	assert(filtered[2]=="five");
+}
+
+void test_isSmallFloat_gives_1_for_9_(){
+	assert(isSmallFloat(9.9)==1);
+	assert(isSmallFloat(11.8)==0);
+}
+void  test_float_Filter_gives_numbers_less_than_10(){
+	float numbers[] = {1.5,8.25,1.75,90.0,45.5};
+	float *filtered_number;
+	assertEqual(float_filter(numbers, 5, isSmallFloat, &filtered_number),3);
+	assert(filtered_number[0]==1.5);
+	assert(filtered_number[1]==8.25);
+	assert(filtered_number[2]==1.75);
 }
 
 void test_intMap_gives_double_of_each_elements_of_array(){
@@ -308,6 +352,7 @@ void test_intMap_doesnot_changes_the_original_array(){
 	assert(numbers[0]==1);
 	assert(numbers[3]==4);
 }
+
 void test_charMap_gives_ascii_value_of_characters(){
 	char characters[] = {'a','b','A','\0'};
 	int (*ascii)(char) = give_ascii;
@@ -331,6 +376,19 @@ void test_stringMap_gives_strings_length_of_evry_string(){
 	assert(name[0]=="vikas");
 }
 
+void test_float_increment(){
+	assert(increment(4.5)==5.5);
+	assert(increment(4.25)==5.25);
+}
+void test_float_Map_increments_float_values_(){
+	float numbers[]={1.25,5.5,6.75};
+	float(*function)(float) = &increment;
+	float *result = floatMap(numbers, 3, function);
+	assert(result[0]==2.25);
+	assert(result[1]==6.5);
+	assert(result[2]==7.75);
+}
+
 void test_indexOf_gives_1_for_i_in_vikas(){
 	string name="vikas";
 	assertEqual(indexOf(name, "vik"), 0);
@@ -346,6 +404,8 @@ void test_indexof_gives_2_for_k_in_vikas(){
 	assertEqual(indexof(name, 's'), 4);
 	assertEqual(indexof(name, 'j'), -1);
 }
+
+
 		// int array[] = {1,2};
 		// int *a =array;
 		// a=&array
