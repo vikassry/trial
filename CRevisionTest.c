@@ -9,18 +9,18 @@ void test_fibonacci_returns_1_for_1(){
 	int *array;
 	array= (int *)malloc(sizeof(int));
 	assertEqual(fibo(1,array),1);
-	// printf("%p\n", *array);
-	// printf("%p\n", array[0]);
 	assert(array[0]==0);
 	assert(array[1]!=1);
 	free(array);
 }
+
 void test_fibonacci_returns_0_for_0(){
 	int *array;
 	array= (int *)malloc(sizeof(int));
 	assertEqual(fibo(0,array),0);
 	free(array);
 }
+
 void test_fibonacci_returns_3_for_5(){
 	int *array;
 	array= (int *)malloc(sizeof(int)*5);
@@ -32,12 +32,14 @@ void test_fibonacci_returns_3_for_5(){
 	assert(array[4]==3);
 	free(array);
 }
+
 void test_fibonacci_returns_0_for_negative_number(){
 	int *array;
 	array= (int *)malloc(sizeof(int));
 	assertEqual(fibo(-3,array),0);
 	free(array);
 }
+
 void test_fibonacci_works_for_decimal(){
 	int *array;
 	array= (int *)malloc(sizeof(int)*5);
@@ -57,6 +59,7 @@ void test_concat_concats_two_arrays_with_length_also(){
 	assertEqual(concat(arr1,3,arr2,5,arr3),1);
 	free(arr3);
 }
+
 void test_concat_concats_two_arrays_with_elements(){
 	int arr1[]={1,2,3};
 	int arr2[]={3,4,5,6,8};
@@ -68,6 +71,7 @@ void test_concat_concats_two_arrays_with_elements(){
 	assert(arr3[7]==8);
 	free(arr3);
 }
+
 void test_concat_concats_gives_0_for_empty_array(){
 	int arr1[0];
 	int arr2[]={3,4,5,6,8};
@@ -85,6 +89,7 @@ void test_filter_filters_the_array(){
 	assert(filtered_array[1]==90);
 	free(filtered_array);
 }
+
 void test_filters_the_array_(){
 	int scores[5]={100,30,45,80,46};
 	int *filtered_array;
@@ -134,7 +139,6 @@ void test_slice_gives_portion_of_array(){
 	free(result);
 }
 
-
 void test_slice_doesnt_modifies_array(){
 	int numbers[] = {5,6,7,8,0};
 	int *result;
@@ -152,6 +156,7 @@ void test_primeNumber_gives_number_of_prime_numbers_in_given_range(){
 	assertEqual(primeNumbers(1,100,&primes), 25);
 	free(primes);
 }
+
 void test_primeNumber_gives_array_of_prime_numbers_in_given_range(){
 	int *primes;
 	primeNumbers(1,100,&primes);
@@ -164,21 +169,25 @@ void test_primeNumber_gives_array_of_prime_numbers_in_given_range(){
 void test_strCompare_gives_0_for_same_strings(){
 	assertEqual(strCompare("vikas","vikas"),0);
 }
+
 void test_strCompare_gives_negative_2_of_char_for_different_strings_of_same_length(){
 	char str1[] = {'v','i','k','a','s','\0'};
 	char str2[] = {'v','i','k','c','u','\0'};
 	assert(strCompare(str1,str2)==-2);
 }
+
 void test_strCompare_gives_5_of_char_for_different_strings_of_same_length(){
 	char str1[] = {'v','i','k','f','t','\0'};
 	char str2[] = {'v','i','k','a','s','\0'};
 	assert(strCompare(str1,str2)==5);
 }
+
 void test_strCompare_gives_97_for_char_for_strings_of_different_length(){
 	char str1[] = {'v','i','k','a','s','\0'};
 	char str2[] = {'v','i','k','\0'};
 	assert(strCompare(str1,str2)==strcmp(str1,str2));
 }
+
 void test_strCompare_gives_10_for_different_chars_if_first_string_has_more_length(){
 	char str1[] = {'v','i','k','a','\0'};
 	char str2[] = {'v','i','a','\0'};
@@ -187,6 +196,7 @@ void test_strCompare_gives_10_for_different_chars_if_first_string_has_more_lengt
 	assert(strCompare(str1,str2)==strcmp(str1,str2));
 	assert(strCompare(str3,str4)==strcmp(str3,str4));
 }
+
 void test_strCompare_gives_negative_99_for_different_chars_if_second_string_has_more_length(){
 	char str1[] = {'a','b','\0'};
 	char str2[] = {'a','b','c','\0'};
@@ -195,6 +205,7 @@ void test_strCompare_gives_negative_99_for_different_chars_if_second_string_has_
 	assert(strCompare(str1,str2)==-99);
 	assert(strCompare(str3,str4)==17);
 };
+
 void test_strCompare_gives_difference_for_space_in_string(){
 	char *str1 = "viAas";
 	char *str2 = "vi as";
@@ -203,6 +214,7 @@ void test_strCompare_gives_difference_for_space_in_string(){
 	assertEqual(strCompare(str1,str2),33);
 	assertEqual(strCompare(str3,str4),0);
 }
+
 void test_strCompare_gives_difference_for_special_character(){
 	assertEqual(strCompare("a ","a&"),-6);
 	assert(strCompare("z","!")==89);
@@ -222,6 +234,7 @@ void test_when_makesqr_is_passed_to_for_each_gives_square_of_array_elements(){
 	assert(array[0]==1);
 	assert(array[1]==8);
 }
+
 void test_forEach_gives_0_for_empty_array_otherwise_1(){
 	int array[0];
 	int array2[1];
@@ -233,6 +246,7 @@ void test_forEach_gives_0_for_empty_array_otherwise_1(){
 void test_upper_case_gives_UPPERCASE_of_given_char(){
 	assert(upper_case('z')=='Z');
 }
+
 void test_char_forEach_converts_to_upper_case_(){
 	char array[] = {'a','b','c','\0'};
 	char (*upper)(char) = upper_case;
@@ -248,14 +262,6 @@ void test_float_forEach_increments_each_element(){
 	assertEqual(float_forEach(numbers, 4, inc),1);
 	assert(numbers[0]==4.5);
 }
-// void test_string__forEach_converts_string_array_to_lower_case(){
-// 	string names[] = {"VIKAS","JEEVAN","SURYAVANSHI",'\0'};
-// 	char(*first)(string) = &give_firstChar;
-// 	assertEqual(string_forEach(names, 3, first), 1);
-// 	assert(names[0]=='V');
-// 	assert(names[1]=='J');
-// 	assert(names[2]=='S');
-// }
 
 void test_Filter_gives_0_for_empty_array_or_negative_length(){
 	int numbers[0];
@@ -270,10 +276,12 @@ void test_Filter_doesnt_change_original_array(){
 	assert(numbers[0]==4)	;
 	free(filtered_terms);
 }
+
 void test_giveMultiplesof5_gives_1_for_multiples_of_5(){
 	assertEqual(giveMultipleof5(25),1);
 	assertEqual(giveMultipleof5(24),0);
 }
+
 void test_int_Filter_gives_multiples_of_5(){
 	int numbers[] = {4,5,90,35,43,67};
 	int *filtered_terms;
@@ -295,6 +303,7 @@ void test_isCapital_gives_1_for_capital_letter(){
 	assert(isCapital('Z')==1);
 	assert(isCapital('s')==0);
 }
+
 void test_charFilter_gives_filters_the_capital_letters(){
 	char word[] = {'a','B','c','D','F','h','u','j','H','y','\0'};
 	char *capitals;
@@ -306,7 +315,7 @@ void test_charFilter_gives_filters_the_capital_letters(){
 	assert(word[0]=='a');
 }
 
-void test_isLargeString_gives_1_for_vikas(){
+void test_isLargeString_gives_1_for_string_greater_than_length_3(){
 	assertEqual(isLargeString("vikas"),1);
 	assertEqual(isLargeString("vik"),0);
 }
@@ -326,6 +335,7 @@ void test_isSmallFloat_gives_1_for_9_(){
 	assert(isSmallFloat(9.9)==1);
 	assert(isSmallFloat(11.8)==0);
 }
+
 void  test_float_Filter_gives_numbers_less_than_10(){
 	float numbers[] = {1.5,8.25,1.75,90.0,45.5};
 	float *filtered_number;
@@ -341,14 +351,18 @@ void test_intMap_gives_double_of_each_elements_of_array(){
 	int numbers[] = {1,2,3,4};
 	int expected[]= {2,4,6,8};
 	Double = &makeDouble;
-	result = intMap(numbers,4,Double);
+	result = int_map(numbers,4,Double);
 	assertEqual(result[0], expected[0]);
 	assertEqual(result[1], expected[1]);
 	assertEqual(result[2], expected[2]);
 	assertEqual(result[3], expected[3]);
 }
+
 void test_intMap_doesnot_changes_the_original_array(){
 	int numbers[] = {1,2,3,4};
+	calc Double;
+	Double = &makeDouble;
+	int_map(numbers,4,Double);
 	assert(numbers[0]==1);
 	assert(numbers[3]==4);
 }
@@ -356,20 +370,17 @@ void test_intMap_doesnot_changes_the_original_array(){
 void test_charMap_gives_ascii_value_of_characters(){
 	char characters[] = {'a','b','A','\0'};
 	int (*ascii)(char) = give_ascii;
-	int *result = charMap(characters, 3, ascii);
+	int *result = char_map(characters, 3, ascii);
 	assertEqual(result[0], 97);
 	assertEqual(result[1], 98);
 	assertEqual(result[2], 65);
 	assertEqual(characters[0],'a');
 }
 
-int give_great_strings(char *str){
-	return (strlen(str)>3) ? 1 : 0;
-}
 void test_stringMap_gives_strings_length_of_evry_string(){
 	string name[] = {"vikas","jeevan","suryavanshi","\0"};
 	int(*getLength)(char *) = str_len;
-	int *result = stringMap(name,3,getLength);
+	int *result = string_map(name,3,getLength);
 	assertEqual(result[0],5);
 	assertEqual(result[1],6);
 	assertEqual(result[2],11);
@@ -380,10 +391,11 @@ void test_float_increment(){
 	assert(increment(4.5)==5.5);
 	assert(increment(4.25)==5.25);
 }
+
 void test_float_Map_increments_float_values_(){
 	float numbers[]={1.25,5.5,6.75};
 	float(*function)(float) = &increment;
-	float *result = floatMap(numbers, 3, function);
+	float *result = float_map(numbers, 3, function);
 	assert(result[0]==2.25);
 	assert(result[1]==6.5);
 	assert(result[2]==7.75);
@@ -415,10 +427,65 @@ void test_indexof_gives_2_for_k_in_vikas(){
 	assertEqual(indexof(name, 'j'), -1);
 }
 
+void test_int_reduce_gives_maximum_number_from_the_array(){
+	int numbers[] = {3,5,23,6,3,9};
+	int(*max)(int,int) = &findMaximum;
+	assertEqual(int_reduce(numbers, 6, max,12),23);
+}
+
+void test_float_reduce_gives_addition_of_array_elements_when_add_func_is_given(){
+	float numbers[] = {3.0,5.5,23.25,6.75,3.5};
+	float(*add)(float,float) = &addition;
+	assert(abs(float_reduce(numbers,5,add,6.75)) == 48);
+	assertEqual(abs(float_reduce(numbers,0,add,6.75)), 6);	
+}
+
+void test_char_reduce_gives_maximum_number_from_the_array(){
+	char characters[] = {'n','a','y','v','s','k','\0'};
+	char(*max)(char,char) = &findmaxChar;
+	assertEqual(char_reduce(characters, 6, max,'o'),'y');
+}
+
+void test_reduce_returns_initial_value_when_empty_array_is_passed_or_length_is_0(){
+	char characters[0];
+	char(*max)(char,char) = &findmaxChar;
+	assertEqual(char_reduce(characters, 0, max,'o'),'o');	
+}
+
+void test_reduce_returns_0_when_negative_length_is_passed(){
+	char characters[0];
+	char(*max)(char,char) = &findmaxChar;
+	assertEqual(char_reduce(characters, -1, max,'o'),0);	
+}
+
+void test_reduce_returns_smallest_string_when_findSmallest_reference_is_passed(){
+	string names1[] = {"hiii","twelve","z","suryavanshi","c"};
+	string names2[] = {"hiii","to","bye","by"};
+	string(*smallest)(string,string) = &findSmallest;
+	assert(string_reduce(names1, 5, smallest, "vicky") == "z");
+	assert(string_reduce(names2, 5, smallest, "") == "");
+
+}
+
+
+
+// void test_Slice_gives_VIK_for_VIKAS(){
+// 	string name = "VIKAS";
+// 	Slice(name,5,0,3);
+// 	assert(name=="VIK");
+// }
+// void test_string__forEach_converts_string_array_to_lower_case(){
+// 	string names[] = {"VIKAS","JEEVAN","SURYAVANSHI"};
+// 	string(*first)(string*,int,int,int) = &Slice;
+// 	assertEqual(string_forEach(names, 3, first), 1);
+// 	assert(names[0]=="VIK");
+// 	assert(names[1]=="JEE");
+// 	assert(names[2]=="SUR");
+// }
 
 		// int array[] = {1,2};
 		// int *a =array;
-		// a=&array
+		// a=&arrays
 		// myfn(array);
 
 // char *array[2] = {"ananthu","dolly"};

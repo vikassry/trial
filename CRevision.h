@@ -12,7 +12,9 @@ int Increment(int a);
 int giveMultipleof5(int number);
 char give_firstChar(string);
 float increment(float);
-int add(int,int);
+float addition(float,float);
+int findMaximum(int,int);
+char findmaxChar(char, char);
 
 int str_len(string);
 int fibo(int, int *);
@@ -23,7 +25,9 @@ int reverseNew(int *, int, int *);
 int isPrime(int);
 int isLargeString(string);
 int isSmallFloat(float);
+string findSmallest(string, string);
 
+void Slice(string, int, int, int );
 int slice(int *, int, int, int, int **);
 int primeNumbers(int, int, int **);
 int strCompare(char *, char *);
@@ -31,18 +35,23 @@ int for_each(int, int(*)(int));
 
 int int_forEach(int *, int, int(*)(int));
 int char_forEach(char *, int, char(*)(char));
-int string_forEach(string *, int, char(*)(string));
 int float_forEach(float *, int, float(*)(float));
+int string_forEach(string *, int, string(*)(string,int,int,int));
 
 int int_filter(int *, int, int(*)(int), int **);
 int char_filter(char *, int, int(*)(char), char **);
 int string_filter(string *, int, int(*)(char *), string **);
 int float_filter(float *, int, int(*)(float), float**);
 
-int *intMap(int *, int, calc);
-int *charMap(char *, int, int(*)(char));
-int *stringMap(string *, int, int(*)(string));
-float *floatMap(float *, int, float(*)(float));
+int *int_map(int *, int, calc);
+int *char_map(char *, int, int(*)(char));
+int *string_map(string *, int, int(*)(string));
+float *float_map(float *, int, float(*)(float));
 
-int indexof(string,char);
+int int_reduce(int *, int, int(*)(int,int),int);
+float float_reduce(float *, int, float(*)(float,float),float);
+char char_reduce(char *, int, char(*)(char,char),char);
+string string_reduce(string*, int, string(*)(string,string),string);
+
 int indexOf(string,string);
+int indexof(string,char);

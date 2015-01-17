@@ -69,17 +69,13 @@ int reverseNew(int *array, int length, int *result_array){
 	return (length==0) ? 0 : 1;
 }
 
-
 int slice(int *array, int len_of_array, int start_index, int end_index, int **result){
-	int i,j=0,result_len=0;
+	int i, result_len=0;
+	*result = (int *)0;
 	for(i=start_index; i<end_index; i++){
+		*result = (int *)realloc(*result, sizeof(int)*result_len+1);
+		(*result)[result_len] = array[i];
 		result_len++;
-	}
-	*result = (int *)malloc(sizeof(int)*result_len);
-	
-	for(i=start_index; i<end_index; i++){
-		(*result)[j] = array[i];
-		j++;
 	}
 	return result_len;
 }
@@ -107,6 +103,7 @@ int primeNumbers(int start, int end, int **array){
 	*array = primes;
 	return prime;
 }
+
 
 int strCompare(char *arr1, char *arr2){
 	int result=0,i;
@@ -143,6 +140,7 @@ int int_forEach(int *array, int length, int (*fun)(int x)){
 char upper_case(char ch){
 	return ch - 32;
 }
+
 int char_forEach(char *array, int length, char(*fun)(char c)){
 	int i;
 	for(i=0; i<length; i++){
@@ -154,6 +152,7 @@ int char_forEach(char *array, int length, char(*fun)(char c)){
 int to_lower(char ch){
 	return ch + 32;
 }
+
 void lower_case(string name){
 	int i;
 	for(i=0; i<str_len(name); i++){
@@ -172,18 +171,12 @@ int float_forEach(float *array, int length, float(*fun)(float x)){
 	}
 	return (length<=0) ? 0 : 1;
 }
-// int stringForEach(string *array, int length, char(*first)(string ch)){
-// 	int i;
-// 	for(i=0; i<length; i++){
-// 		array[i] = first(array[i]);
-// 	}
-// 	return (length<=0) ? 0 : 1;
-// }
 
 
 int giveMultipleof5(int number){
 	return (number%5==0) ? 1 : 0;
 }
+
 int int_filter(int *array, int length, int(*fun)(int num), int **filtered_array){
 	int i, len=0;
 	int  *filtered = (int *)0;
@@ -200,6 +193,7 @@ int int_filter(int *array, int length, int(*fun)(int num), int **filtered_array)
 int isCapital(char ch){
 	return (ch<91 && ch>64) ? 1 : 0;
 }
+
 int char_filter(char *array, int length, int(*fun)(char ch), char **filtered_array){
 	int i, len=0;
 	char  *filtered = (char *)0;
@@ -233,6 +227,7 @@ int string_filter(string *array, int length, int(*func)(string ch), string **res
 int isSmallFloat(float num){
 	return num < 10;
 }
+
 int float_filter(float *numbers, int length, int(predicate)(float n), float **result){
 	int i=0, len=0;
 	float *filtered = (float *)0;
@@ -252,7 +247,7 @@ int makeDouble(int num){
 	return num * 2;
 }
 
-int *intMap(int *array, int length, calc multiply){
+int *int_map(int *array, int length, calc multiply){
 	int i, *result;
 	result = (int *)malloc(sizeof(int)*length);
 	for(i=0; i<length; i++){
@@ -264,7 +259,8 @@ int *intMap(int *array, int length, calc multiply){
 int give_ascii(char ch){
 	return ch;
 }
-int *charMap(char *array, int length, int(*ascii)(char ch)){
+
+int *char_map(char *array, int length, int(*ascii)(char ch)){
 	int i, *result;
 	result = (int *)malloc(length);
 	for(i=0; i<length; i++){
@@ -273,7 +269,7 @@ int *charMap(char *array, int length, int(*ascii)(char ch)){
 	return result;
 }
 
-int *stringMap(string *names, int length, int(*getLength)(string name)){
+int *string_map(string *names, int length, int(*getLength)(string name)){
 	int i, *result;
 	result = (int*)malloc(sizeof(int)*length);
 	for(i=0; i<length; i++){
@@ -285,7 +281,8 @@ int *stringMap(string *names, int length, int(*getLength)(string name)){
 float increment(float value){
 	return value + 1;
 }
-float *floatMap(float *numbers, int lenght, float(*inc)(float num)){
+
+float *float_map(float *numbers, int lenght, float(*inc)(float num)){
 	int i;
 	float *new_numbers = (float *)malloc(sizeof(float)*lenght);
 	for(i=0; i<lenght; ++i){
@@ -312,3 +309,77 @@ int indexof(string text, char substr){
 	}
 	return index;
 }
+
+int findMaximum(int a, int b){
+	return (a>=b) ? a : b;
+}
+
+int int_reduce(int *numbers, int length, int(*max)(int a,int b), int initial){
+	int i, result=initial;
+	for(i=0; i<length; i++){
+		result = max(result,numbers[i]);
+	}
+	return (length==0) ? initial : (length<0) ? 0 : result;
+}
+
+float addition(float a, float b){
+	return a + b;
+}
+
+float float_reduce(float *numbers, int length, float(*add)(float a,float b), float initial){
+	int i;
+	float result=initial;
+	for(i=0; i<length; i++){
+		result = add(result,numbers[i]);
+	}
+	return (length==0) ? initial : (length<0) ? 0 : result;
+}
+
+char findmaxChar(char a, char b){
+	return (a>=b) ? a : b;
+}
+
+char char_reduce(char *characters, int length, char(*max)(char a,char b),char initial){
+	int i; 
+	char result=initial;
+	for (i=0; i<length; ++i){
+		result = max(result, characters[i]);
+	}
+	return (length==0) ? initial : (length<0) ? 0 : result;
+}
+
+string findSmallest(string str1, string str2){
+	return (str_len(str1) <= str_len(str2)) ? str1 : str2;
+}
+
+string string_reduce(string *names, int length, string(*smallest)(string str1,string str2), string initial){
+	int i; 
+	string result=initial;
+	for(i=0; i<length; i++){
+		result = smallest(result, names[i]);
+	}
+	return (length==0) ? initial : (length<0) ? 0 : result;
+}
+
+
+
+// void Slice(string array, int len_of_array, int start_index, int end_index){
+// 	int i, j=0, length = end_index-start_index;
+// 	string substr = (char*)malloc(sizeof(char)*length);
+// 	for(i=start_index; i<end_index; i++){
+// 		substr[j] = array[i]; j++;
+// 		printf("%d\n", substr[j]);
+// 	}
+// 	array = (char*)malloc(sizeof(char)*length);
+// 	for(i=0;i<length; i++){
+// 		array[i] = substr[i];
+// 	}
+// }
+
+// int string_forEach(string *array, int length, string(*perform)(string ch, int length, int start, int end)){
+// 	int i;
+// 	for(i=0; i<length; i++){
+// 		array[i] = perform(array[i],str_len(array[i]),0,3);
+// 	}
+// 	return (length<=0) ? 0 : 1;
+// }
