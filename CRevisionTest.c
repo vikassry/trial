@@ -389,15 +389,25 @@ void test_float_Map_increments_float_values_(){
 	assert(result[2]==7.75);
 }
 
-void test_indexOf_gives_1_for_i_in_vikas(){
+void test_indexOf_gives_index_only_when_substring_is_present_in_exact_sequence_of_substrings_characters_in_main_string(){
 	string name="vikas";
 	assertEqual(indexOf(name, "vik"), 0);
+	assertEqual(indexOf(name, "ika"), 1);
 	assertEqual(indexOf(name, "s"), 4);
 }
-void test_indexOf_gives_minus_1_for_j_in_vikas(){
+
+void test_indexOf_gives_minus_1_when_substrings_characters_are_present_but_not_in_substrings_chars_sequence(){
+	string name="vikas";
+	assertEqual(indexOf(name, "via"), -1);
+	assertEqual(indexOf(name, "isa"), -1);
+	assertEqual(indexOf(name, "si"), -1);
+}
+
+void test_indexOf_gives_minus_1_for_h_in_vikas(){
 	string name="vikas";
 	assertEqual(indexOf(name, "h"), -1);
 }
+
 void test_indexof_gives_2_for_k_in_vikas(){
 	string name="vikas";
 	assertEqual(indexof(name, 'k'), 2);

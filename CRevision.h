@@ -12,6 +12,7 @@ int Increment(int a);
 int giveMultipleof5(int number);
 char give_firstChar(string);
 float increment(float);
+int add(int,int);
 
 int str_len(string);
 int fibo(int, int *);

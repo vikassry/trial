@@ -295,20 +295,14 @@ float *floatMap(float *numbers, int lenght, float(*inc)(float num)){
 }
 
 int indexOf(string text, string substr){
-	int i, j, index=-1, status=0;
-	for (i=0; i<str_len(substr); i++){
-		for(j=0; j<str_len(text); j++){
-			if(substr[i]==text[j]){
-				status++; break;
-			}
-		}
+	int i, status=0, id;
+	for (i=0; i<str_len(text); i++){
+		(substr[0]==text[i]) && (id = i);
 	}
-	if(status==str_len(substr)){
-		for (i=0; i<str_len(text); ++i){
-			(substr[0]==text[i]) && (index=i);
-		}
+	for(i=0; i<str_len(substr); i++){
+		(substr[i] == text[id+i]) && status++;
 	}
-	return index;
+	return (status==str_len(substr)) ? id : -1;
 }
 
 int indexof(string text, char substr){
