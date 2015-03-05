@@ -81,7 +81,7 @@ void test_concat_concats_gives_0_for_empty_array(){
 	free(arr3);
 }
 
-void test_filter_filters_the_array(){
+void test_filter_filters_the_array_from_greter_than_threshold_85(){
 	int scores[3]={100,90,80};
 	int *filtered_array;
 	assertEqual(filter(scores,3,85,&filtered_array), 2);
@@ -90,15 +90,20 @@ void test_filter_filters_the_array(){
 	free(filtered_array);
 }
 
-void test_filters_the_array_(){
-	int scores[5]={100,30,45,80,46};
+void test_filter_filters_the_array_and_returns_the_number_of_filtered_terms(){
+	int scores[3]={100,90,80};
 	int *filtered_array;
-	assertEqual(filter(scores,5,45,&filtered_array), 4);
+	assertEqual(filter(scores,3,85,&filtered_array), 2);
 	assert(filtered_array[0]==100);
-	assert(filtered_array[1]==45);
-	assert(filtered_array[2]==80);
-	assert(filtered_array[3]==46);
+	assert(filtered_array[1]==90);
 	free(filtered_array);
+}
+
+void test_filter_gives_0_for_negative_or_0_length(){
+	int scores[]={}, score1[0];
+	int *filtered_array;
+	assertEqual(filter(scores,0,3,&filtered_array), 0);
+	assertEqual(filter(scores,-9,3,&filtered_array), 0);
 }
 
 void test_reverse_the_array_itself(){
@@ -221,7 +226,7 @@ void test_strCompare_gives_difference_for_special_character(){
 }
 	
 void test_for_each_gives_4_for_3_(){
-	int (*increment)(int) = Increment;
+	int_int increment = Increment;
 	int (*sqr)(int) = makesqr;
 	assertEqual(for_each(3,increment), 4);
 	assertEqual(for_each(3,sqr),27);
@@ -229,7 +234,7 @@ void test_for_each_gives_4_for_3_(){
 
 void test_when_makesqr_is_passed_to_for_each_gives_square_of_array_elements(){
 	int array[] = {1,2,3,4,5};
-	int (*fun)(int) = &makesqr;
+	int_int fun = &makesqr;
 	assertEqual(int_forEach(array,5,fun), 1);
 	assert(array[0]==1);
 	assert(array[1]==8);
@@ -238,9 +243,9 @@ void test_when_makesqr_is_passed_to_for_each_gives_square_of_array_elements(){
 void test_forEach_gives_0_for_empty_array_otherwise_1(){
 	int array[0];
 	int array2[1];
-	int (*fun)(int) = &makesqr;
-	assertEqual(int_forEach(array, 0, fun),0);
-	assertEqual(int_forEach(array2, 1, fun),1);
+	int_int sqr = &makesqr;
+	assertEqual(int_forEach(array, 0, sqr),0);
+	assertEqual(int_forEach(array2, 1, sqr),1);
 }
 
 void test_upper_case_gives_UPPERCASE_of_given_char(){
@@ -249,7 +254,7 @@ void test_upper_case_gives_UPPERCASE_of_given_char(){
 
 void test_char_forEach_converts_to_upper_case_(){
 	char array[] = {'a','b','c','\0'};
-	char (*upper)(char) = upper_case;
+	char_char upper = upper_case;
 	assertEqual(char_forEach(array,3,upper),1);
 	assertEqual(array[0],'A');
 	assertEqual(array[1],'B');
@@ -258,15 +263,16 @@ void test_char_forEach_converts_to_upper_case_(){
 
 void test_float_forEach_increments_each_element(){
 	float numbers[] = {3.5, 6.75, 2.25, 10.00};
-	float(*inc)(float) = &increment;
+	float_float inc = &increment;
 	assertEqual(float_forEach(numbers, 4, inc),1);
 	assert(numbers[0]==4.5);
 }
 
 void test_Filter_gives_0_for_empty_array_or_negative_length(){
 	int numbers[0];
+	int_int multiple_5 = giveMultipleof5;
 	int *filtered_terms;
-	assertEqual(int_filter(numbers,-1,giveMultipleof5,&filtered_terms),0);
+	assertEqual(int_filter(numbers, -1, multiple_5, &filtered_terms),0);
 }
 void test_Filter_doesnt_change_original_array(){
 	int numbers[] = {4,5,90,35,43,67};
@@ -306,8 +312,9 @@ void test_isCapital_gives_1_for_capital_letter(){
 
 void test_charFilter_gives_filters_the_capital_letters(){
 	char word[] = {'a','B','c','D','F','h','u','j','H','y','\0'};
+	int_char isCap = isCapital;	  	
 	char *capitals;
-	assertEqual(char_filter(word,10,isCapital,&capitals),4);
+	assertEqual(char_filter(word,10,isCap,&capitals),4);
 	assertEqual(capitals[0],'B');
 	assertEqual(capitals[1],'D');
 	assertEqual(capitals[2],'F');
@@ -322,9 +329,9 @@ void test_isLargeString_gives_1_for_string_greater_than_length_3(){
 
 void test_stringFilter_returns_string_that_greater_than_3(){
 	string words[] = {"hii","vikas","suryavanshi","foo","five"};
-	int(*function)(string) = &isLargeString;
+	int_string islarge= &isLargeString;
 	string *filtered;
-	int Filtered_number = string_filter(words,5,function,&filtered);
+	int Filtered_number = string_filter(words,5,islarge,&filtered);
 	assertEqual(Filtered_number, 3);
 	assert(filtered[0]=="vikas");
 	assert(filtered[1]=="suryavanshi");
@@ -347,7 +354,7 @@ void  test_float_Filter_gives_numbers_less_than_10(){
 
 void test_intMap_gives_double_of_each_elements_of_array(){
 	int *result;
-	calc Double;
+	int_int Double;
 	int numbers[] = {1,2,3,4};
 	int expected[]= {2,4,6,8};
 	Double = &makeDouble;
@@ -360,7 +367,7 @@ void test_intMap_gives_double_of_each_elements_of_array(){
 
 void test_intMap_doesnot_changes_the_original_array(){
 	int numbers[] = {1,2,3,4};
-	calc Double;
+	int_int Double;
 	Double = &makeDouble;
 	int_map(numbers,4,Double);
 	assert(numbers[0]==1);
@@ -369,7 +376,7 @@ void test_intMap_doesnot_changes_the_original_array(){
 
 void test_charMap_gives_ascii_value_of_characters(){
 	char characters[] = {'a','b','A','\0'};
-	int (*ascii)(char) = give_ascii;
+	int_char ascii = give_ascii;
 	int *result = char_map(characters, 3, ascii);
 	assertEqual(result[0], 97);
 	assertEqual(result[1], 98);
@@ -379,7 +386,7 @@ void test_charMap_gives_ascii_value_of_characters(){
 
 void test_stringMap_gives_strings_length_of_evry_string(){
 	string name[] = {"vikas","jeevan","suryavanshi","\0"};
-	int(*getLength)(char *) = str_len;
+	int_string getLength = str_len;
 	int *result = string_map(name,3,getLength);
 	assertEqual(result[0],5);
 	assertEqual(result[1],6);
@@ -394,8 +401,8 @@ void test_float_increment(){
 
 void test_float_Map_increments_float_values_(){
 	float numbers[]={1.25,5.5,6.75};
-	float(*function)(float) = &increment;
-	float *result = float_map(numbers, 3, function);
+	float_float inc = &increment;
+	float *result = float_map(numbers, 3, inc);
 	assert(result[0]==2.25);
 	assert(result[1]==6.5);
 	assert(result[2]==7.75);
@@ -466,6 +473,9 @@ void test_reduce_returns_smallest_string_when_findSmallest_reference_is_passed()
 	assert(string_reduce(names2, 5, smallest, "") == "");
 
 }
+
+
+
 
 
 
