@@ -1,0 +1,27 @@
+extends layout
+block vars
+ - var title = "comments"
+ head
+  script(src='javascripts/main.js')
+  script(src='javascripts/jquery-2.1.1.min.js')
+  script(src='javascripts/app_ajax.js')
+
+block content
+ h1
+  a(href="/") <<
+  |&nbsp;Guest Book
+ div
+  h2 Leave a comment
+  span 
+   |Name : 
+   input(id='user' type="text" name="name")
+  br
+  br
+  span
+   |Comment : 
+   textArea(id='comment' name="comment")
+  br 
+  input(id='add' type="button" value="submit")
+  hr
+ #allComments
+  |DATETIME_NAME_COMMENTS_LIST
