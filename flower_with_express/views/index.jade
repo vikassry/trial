@@ -1,0 +1,20 @@
+extends layout
+block vars
+ - var title = 'Home'
+ head
+  script(src='/javascripts/main.js')
+block content
+ h1 Welcome to FlowerShow
+ table
+  tr
+   td
+    img(src="/images/freshorigins.jpg" width=1000 height=712 border=1)
+   td
+    ul
+     li
+      a(href="/Abeliophyllum") Abeliophyllum
+     li
+      a(href="/Ageratum") Ageratum
+    p: div
+     a(href="/comments") Guest Book
+    img(id="jug" src="images/animated-flower-image-0021.gif" onclick="jugclick()")
